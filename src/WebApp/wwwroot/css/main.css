@@ -1,0 +1,25 @@
+
+.calendar .lineItem span{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    padding: 5px;
+    margin: 1px;
+    border: black 1px solid;
+}
+
+.calendar .lineItem .comment-item{
+    background-color: #99ff99;
+}
+
+.calendar .lineItem .simpleEvent-item{
+    background-color: #ff9999;
+}
+
+.calendar .lineItem .undefined-item{
+    background-color: #9999ff;
+}
+
+.calendar .lineItem .selected-day{
+    border: solid 1px #ff00ff;
+}

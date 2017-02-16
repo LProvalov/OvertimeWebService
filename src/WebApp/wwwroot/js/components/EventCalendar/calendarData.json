@@ -1,0 +1,6 @@
+{
+    "date": "05.02.2017",
+    "events":[
+        {"data": "01.02.2017", "type": "comment", "id":"1"},
+        {"data": "23.02.2017", "type": "holyday"}]
+}
