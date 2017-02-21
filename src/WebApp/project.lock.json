@@ -1930,9 +1930,6 @@
           "lib/netstandard1.0/NuGet.Versioning.dll": {}
         }
       },
-      "react.js/0.14.7": {
-        "type": "package"
-      },
       "runtime.native.System/4.0.0": {
         "type": "package",
         "dependencies": {
@@ -5421,23 +5418,6 @@
         "lib/net45/NuGet.Versioning.xml",
         "lib/netstandard1.0/NuGet.Versioning.dll",
         "lib/netstandard1.0/NuGet.Versioning.xml"
-      ]
-    },
-    "react.js/0.14.7": {
-      "sha512": "Vuiy4eCBUzaAHE7QGiQPueMajINZprnC3742+tv5hQIlsAJJ9iI+kg58EsqO4jbVkOlMW9G2kS0mPSwgOZJoZQ==",
-      "type": "package",
-      "path": "react.js/0.14.7",
-      "files": [
-        "Content/Scripts/react/react-dom-server.js",
-        "Content/Scripts/react/react-dom-server.min.js",
-        "Content/Scripts/react/react-dom.js",
-        "Content/Scripts/react/react-dom.min.js",
-        "Content/Scripts/react/react-with-addons.js",
-        "Content/Scripts/react/react-with-addons.min.js",
-        "Content/Scripts/react/react.js",
-        "Content/Scripts/react/react.min.js",
-        "react.js.0.14.7.nupkg.sha512",
-        "react.js.nuspec"
       ]
     },
     "runtime.native.System/4.0.0": {
@@ -10023,8 +10003,7 @@
       "Microsoft.Extensions.Logging.Debug >= 1.0.0",
       "Microsoft.Extensions.Options.ConfigurationExtensions >= 1.0.0",
       "Microsoft.NETCore.App >= 1.0.1",
-      "Microsoft.VisualStudio.Web.BrowserLink.Loader >= 14.0.0",
-      "react.js >= 0.14.7"
+      "Microsoft.VisualStudio.Web.BrowserLink.Loader >= 14.0.0"
     ],
     ".NETCoreApp,Version=v1.0": []
   },

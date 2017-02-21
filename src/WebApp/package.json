@@ -1,7 +1,11 @@
 {
 	"version": "1.0.0",
 	"name": "calendar_app",
-	"private": true,
+  "private": true,
+  "dependencies": {
+    "react": "15.4.2",
+    "react-dom": "15.4.2"
+  },
   "devDependencies": {
     "jquery": "^3.1.1",
 

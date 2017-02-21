@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Models;
 using Microsoft.AspNetCore.Cors;
+using WebAPI.Models;
+
 
 namespace WebAPI.Controllers
 {
@@ -20,7 +21,7 @@ namespace WebAPI.Controllers
         public IRepository DayEventsRepository { get; set; }
 
         [HttpGet]
-        public IEnumerable<DayEventModel> GetAll()
+        public IEnumerable<DayEvent> GetAll()
         {
             return DayEventsRepository.GetDayEventsByUser(0);
         }

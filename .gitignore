@@ -1,0 +1,13 @@
+src/WebAPI/bin/Debug/netcoreapp1.0/WebAPI.deps.json
+src/WebAPI/bin/Debug/netcoreapp1.0/WebAPI.dll
+src/WebAPI/bin/Debug/netcoreapp1.0/WebAPI.pdb
+src/WebAPI/bin/Debug/netcoreapp1.0/WebAPI.runtimeconfig.dev.json
+src/WebAPI/bin/Debug/netcoreapp1.0/WebAPI.runtimeconfig.json
+src/WebAPI/obj/Debug/netcoreapp1.0/.IncrementalCache
+src/WebAPI/obj/Debug/netcoreapp1.0/.SDKVersion
+src/WebAPI/obj/Debug/netcoreapp1.0/WebAPIdotnet-compile.deps.json
+src/WebAPI/obj/Debug/netcoreapp1.0/dotnet-compile-csc.rsp
+src/WebAPI/obj/Debug/netcoreapp1.0/dotnet-compile.assemblyinfo.cs
+src/WebAPI/obj/Debug/netcoreapp1.0/dotnet-compile.rsp
+src/WebApp/node_modules/
+src/WebApp/wwwroot/lib

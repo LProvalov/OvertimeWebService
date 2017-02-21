@@ -32,18 +32,6 @@ class AppComponent extends React.Component {
         const dataProvider = new DayDetailDataProvider();
         console.log('app started');
         dataProvider.getAllDaysByMonthAndOwnerId(new Date(), 0);
-        /*let events =[ 
-            new CalendarEvent({"date": new Date(2017, 1, 1), "type": CE.EventTypeEnum().UNDEFINED}),
-            new CalendarEvent({"date": new Date(2017, 1, 2), "type": CE.EventTypeEnum().UNDEFINED}),
-            new CalendarEvent({"date": new Date(2017, 1, 3), "type": CE.EventTypeEnum().UNDEFINED}),
-            new CalendarEvent({"date": new Date(2017, 1, 18), "type": CE.EventTypeEnum().COMMENT, "id": 1}),
-            new CalendarEvent({"date": new Date(2017, 1, 19), "type": CE.EventTypeEnum().COMMENT, "id": 3}),
-            new CalendarEvent({"date": new Date(2017, 1, 20), "type": CE.EventTypeEnum().COMMENT, "id": 4}),
-            new CalendarEvent({"date": new Date(2017, 1, 28), "type": CE.EventTypeEnum().SIMPLE_EVENT}),
-            new CalendarEvent({"date": new Date(2017, 2, 8), "type": CE.EventTypeEnum().SIMPLE_EVENT}),
-            new CalendarEvent({"date": new Date(2017, 2, 16), "type": CE.EventTypeEnum().SIMPLE_EVENT}),
-            new CalendarEvent({"date": new Date(2017, 2, 24), "type": CE.EventTypeEnum().COMMENT, "id": 2})];
-         */
         return (
         <div>
             <Clock />

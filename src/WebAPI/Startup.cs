@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using WebAPI.Repositories;
+using Microsoft.EntityFrameworkCore;
+using WebAPI.Data;
 
 namespace WebAPI
 {
@@ -47,12 +50,16 @@ namespace WebAPI
                 });
             });
 
+            services.AddDbContext<OvertimeContext>(options => {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+
             services.AddMvc();
             services.AddSingleton<IRepository, Repository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, OvertimeContext context)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -62,6 +69,8 @@ namespace WebAPI
             app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseMvc();
+
+            DbInitializer.Initialize(context);
         }
     }
 }
