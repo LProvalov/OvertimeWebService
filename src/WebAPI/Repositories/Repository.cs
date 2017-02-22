@@ -16,6 +16,7 @@ namespace WebAPI
         {
             _context = context;
         }
+
         public DayEvent CreateDayEvent(DayEvent model)
         {
             _context.DayEvents.Add(model);
@@ -35,14 +36,19 @@ namespace WebAPI
             return false;
         }
 
+        public ICollection<DayEvent> GetAllDayEvent()
+        {
+            return _context.DayEvents.ToArray();
+        }
+
         public DayEvent GetDayEvent(long id)
         {
             return _context.DayEvents.Where(o => o.Id == id).FirstOrDefault();
         }
 
-        public IEnumerable<DayEvent> GetDayEventsByUser(long ownerId)
+        public IEnumerable<DayEvent> GetAllDayEventsByUser(long ownerId)
         {
-            foreach(var val in _context.DayEvents.Where(o => o.Owner.Id == ownerId).ToArray())
+            foreach(var val in _context.DayEvents.Where(o => o.User.Id == ownerId).ToArray())
             {
                 yield return val;
             }
@@ -60,5 +66,44 @@ namespace WebAPI
             }
             return false;
         }
+
+        public User GetUser(long userId)
+        {
+            return _context.Users.FirstOrDefault(u => u.Id == userId);
+        }
+
+        public bool UpdateUser(User model)
+        {
+            var updatedUser = _context.Users.FirstOrDefault(u => u.Id == model.Id);
+            if(updatedUser != null)
+            {
+                updatedUser.Update(model);
+                _context.Entry(updatedUser).State = EntityState.Modified;
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public User CreateUser(User model)
+        {
+            var entityEntry = _context.Users.Add(model);
+            _context.SaveChanges();
+            return entityEntry.Entity;
+        }
+
+        public bool DeleteUser(User model)
+        {
+            var entity = _context.Users.FirstOrDefault(o => o.Id == model.Id);
+            if(entity != null)
+            {
+                _context.Users.Remove(entity);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+
     }
 }

@@ -10,7 +10,7 @@ namespace WebAPI.Services
 {
     public static class PasswordCrypt
     {
-        private const string saltStr = "NIsP9NprqBuYeJarraAKNuVQ!=";
+        private const string saltStr = "U2FsdCBzdHJpbmcgZm9yIGNyeXB0IHBhc3N3b3JkITIzJCMyMjM=";
         //private int saltLength = 128;
         public static string CreateDbPassword(string unsaltedPassword)
         {

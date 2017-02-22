@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
         [HttpGet]
         public IEnumerable<DayEvent> GetAll()
         {
-            return DayEventsRepository.GetDayEventsByUser(0);
+            return DayEventsRepository.GetAll();
         }
 
         [HttpGet("{id}", Name = "GetDayEvent")]
