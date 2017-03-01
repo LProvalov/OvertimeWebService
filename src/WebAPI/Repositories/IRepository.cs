@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using WebAPI.Models;
 using WebAPI.Enums;
 
-namespace WebAPI
+namespace WebAPI.Repositories
 {
     public interface IRepository
     {
@@ -20,5 +20,6 @@ namespace WebAPI
         bool DeleteUser(User model);
         ICollection<User> GetAllUsers();
         ICollection<User> GetUsersPage(int pageSize, int pageNumber, Sorting sortOrder /* TODO: add parametr for sort (fieldName)*/);
+        
     }
 }

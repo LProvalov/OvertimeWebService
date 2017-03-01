@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
 using WebAPI.Models;
 
+using WebAPI.Repositories;
 
 namespace WebAPI.Controllers
 {

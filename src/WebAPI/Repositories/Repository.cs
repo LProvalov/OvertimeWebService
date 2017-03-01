@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using WebAPI.Models;
 using WebAPI.Repositories;
+using WebAPI.Enums;
 
 namespace WebAPI
 {
@@ -104,6 +105,14 @@ namespace WebAPI
             return false;
         }
 
+        public ICollection<User> GetAllUsers()
+        {
+            throw new NotImplementedException();
+        }
 
+        public ICollection<User> GetUsersPage(int pageSize, int pageNumber, Sorting sortOrder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
