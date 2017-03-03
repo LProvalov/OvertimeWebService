@@ -5,12 +5,49 @@ using System.Threading.Tasks;
 
 namespace WebAPI.DataProviders
 {
-    public class DataProviderResponse
+    public class DataProviderResponse<T>
     {
-        public ResponseStatusEnum Status { get; set; }
+        public DataProviderResponse(ICollection<string> errorInFields,
+            T responseData, ResponseStatusEnum status, string errorMessage)
+        {
+            this._responseData = responseData;
+            this._errorInFields = errorInFields;
+            this._status = status;
+            this._errorMessage = errorMessage;
+        }
 
-        public string ErrorMessage { get; set; }
+        private ResponseStatusEnum _status;
+        public ResponseStatusEnum Status
+        {
+            get
+            {
+                return this._status;
+            }
+        }
 
-        public ICollection<string> Fields { get; set; }
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get {
+                return this._errorMessage;
+            }
+        }
+
+        public ICollection<string> _errorInFields = null;
+        public ICollection<string> ErrorInFields
+        {
+            get {
+                return this._errorInFields;
+            }
+        }
+
+        private T _responseData;
+        public T ResponseData
+        {
+            get
+            {
+                return this._responseData;
+            }
+        }
     }
 }
