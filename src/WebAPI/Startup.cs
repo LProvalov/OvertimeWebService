@@ -50,7 +50,7 @@ namespace WebAPI
                 });
             });
 
-            services.AddDbContext<OvertimeContext>(options => {
+            services.AddDbContext<Context>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
@@ -59,7 +59,7 @@ namespace WebAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, OvertimeContext context)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, Context context)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();

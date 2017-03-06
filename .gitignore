@@ -11,3 +11,5 @@ src/WebAPI/obj/Debug/netcoreapp1.0/dotnet-compile.assemblyinfo.cs
 src/WebAPI/obj/Debug/netcoreapp1.0/dotnet-compile.rsp
 src/WebApp/node_modules/
 src/WebApp/wwwroot/lib
+src/WebApp/bin/Debug/
+src/WebApp/obj/Debug/
