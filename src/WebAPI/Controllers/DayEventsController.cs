@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
 
-using WebAPI.Repositories;
+using WebAPI;
 
 namespace WebAPI.Controllers
 {
@@ -13,12 +13,12 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")]
     public class DayEventsController : Controller
     {
-        public DayEventsController(IRepository repository)
+        public DayEventsController(Repository repository)
         {
-            DayEventsRepository = repository;
+          //  DayEventsRepository = repository;
         }
 
-        public IRepository DayEventsRepository { get; set; }
+        //public IRepository DayEventsRepository { get; set; }
         
         //[HttpGet]
         //public IEnumerable<DayEvent> GetAll()

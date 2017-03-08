@@ -55,7 +55,7 @@ namespace WebAPI
             });
 
             services.AddMvc();
-            services.AddSingleton<IRepository, Repository>();
+            //services.AddSingleton<IRepository, Repository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline

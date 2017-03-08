@@ -15,7 +15,7 @@ namespace WebAPI.DataProviders
         DataProviderResponse<string> SingIn(string username, string email, string unCryptedPassword);
 
         // Work with friends list
-        DataProviderResponse<ICollection<User>> GetFriendsList(long userId);
+        DataProviderResponse<ICollection<UserOfService>> GetFriendsList(long userId);
 
         DataProviderResponse<bool> RemoveFriendsFromFriendList(long userId, ICollection<long> removingUsersIds);
 
@@ -23,7 +23,7 @@ namespace WebAPI.DataProviders
 
         DataProviderResponse<bool> ReplyOnRequestOfFriendAdding(long userId, long requestId, bool isAccepted);
 
-        DataProviderResponse<ICollection<User>> FindUsersByPartOfUsername(string partOfUserName, int pageSize, int pageNumber);
+        DataProviderResponse<ICollection<UserOfService>> FindUsersByPartOfUsername(string partOfUserName, int pageSize, int pageNumber);
 
         // Work with shared lists
 
