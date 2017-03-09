@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using WebAPI.Repositories;
+using WebAPI.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Data;
 
@@ -55,7 +56,12 @@ namespace WebAPI
             });
 
             services.AddMvc();
-            //services.AddSingleton<IRepository, Repository>();
+            services.AddSingleton<IRepositorySharedList, RepositorySharedList>();
+            services.AddSingleton<IRepositorySharedListComment, RepositorySharedListComment>();
+            services.AddSingleton<IRepositorySharedListData, RepositorySharedListData>();
+            services.AddSingleton<IRepositoryUserOfService, RepositoryUserOfService>();
+
+            services.AddSingleton<Repository, Repository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
@@ -74,3 +80,4 @@ namespace WebAPI
         }
     }
 }
+

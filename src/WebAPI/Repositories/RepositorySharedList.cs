@@ -39,6 +39,7 @@ namespace WebAPI.Repositories
 
         public ICollection<SharedList> ReadAllSharedListsBySharedListIds(string sharedListIds)
         {
+            if (String.IsNullOrEmpty(sharedListIds)) return null;
             List<long> ids = new List<long>();
             foreach (var idsStr in sharedListIds.Split(','))
             {
