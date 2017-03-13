@@ -44,8 +44,6 @@ namespace WebAPI.Data
                 context.UsersOfService.Add(user);
             }
             context.SaveChanges();
-
-            context.SaveChanges();
         }
         
     }

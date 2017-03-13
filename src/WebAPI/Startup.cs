@@ -11,6 +11,8 @@ using WebAPI.Repositories;
 using WebAPI.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Data;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace WebAPI
 {
@@ -55,7 +57,7 @@ namespace WebAPI
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddMvc();
+            services.AddMvcCore().AddAuthorization();
             services.AddSingleton<IRepositorySharedList, RepositorySharedList>();
             services.AddSingleton<IRepositorySharedListComment, RepositorySharedListComment>();
             services.AddSingleton<IRepositorySharedListData, RepositorySharedListData>();
@@ -67,6 +69,32 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, Context context)
         {
+            string secretKey = Configuration.GetValue<string>("SecretKey");
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+
+
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = signingKey,
+
+                ValidateIssuer = true,
+                ValidIssuer = "ExampleIssuer",
+
+                ValidateAudience = true,
+                ValidAudience = "ExampleAudience",
+
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
+
+            app.UseJwtBearerAuthentication(new JwtBearerOptions {
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                TokenValidationParameters = tokenValidationParameters
+            });
+            
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
