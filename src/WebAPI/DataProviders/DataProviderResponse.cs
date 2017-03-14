@@ -42,7 +42,7 @@ namespace WebAPI.DataProviders
         }
 
         private T _responseData;
-        public T ResponseData
+        public T Data
         {
             get
             {

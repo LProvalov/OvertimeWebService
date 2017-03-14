@@ -22,7 +22,8 @@
       "version": "1.0.0-preview2-final",
       "type": "build"
     },
-    "Microsoft.AspNetCore.Cryptography.KeyDerivation": "1.0.0"
+    "Microsoft.AspNetCore.Cryptography.KeyDerivation": "1.0.0",
+    "Microsoft.IdentityModel.Tokens": "5.0.0"
   },
 
   "tools": {

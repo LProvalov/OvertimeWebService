@@ -7,12 +7,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using WebAPI.Repositories;
 using WebAPI.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Data;
-using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using WebAPI.DataProviders;
 
 namespace WebAPI
 {
@@ -52,57 +53,59 @@ namespace WebAPI
                     .AllowCredentials();
                 });
             });
-
+            
             services.AddDbContext<Context>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
-
-            services.AddMvcCore().AddAuthorization();
+            
+            services.AddMvc();
             services.AddSingleton<IRepositorySharedList, RepositorySharedList>();
             services.AddSingleton<IRepositorySharedListComment, RepositorySharedListComment>();
             services.AddSingleton<IRepositorySharedListData, RepositorySharedListData>();
             services.AddSingleton<IRepositoryUserOfService, RepositoryUserOfService>();
 
-            services.AddSingleton<Repository, Repository>();
+            services.AddSingleton<IMainDataProvider, MainDataProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, Context context)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, Context context, IMainDataProvider mainDataProvider)
         {
-            string secretKey = Configuration.GetValue<string>("SecretKey");
-            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
-
-
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = signingKey,
-
-                ValidateIssuer = true,
-                ValidIssuer = "ExampleIssuer",
-
-                ValidateAudience = true,
-                ValidAudience = "ExampleAudience",
-
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero
-            };
-
-            app.UseJwtBearerAuthentication(new JwtBearerOptions {
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,
-                TokenValidationParameters = tokenValidationParameters
-            });
-            
-
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
             app.UseApplicationInsightsRequestTelemetry();
-
             app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseMvc();
+
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetValue<string>("SecretKey")));
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                // The signing key must match!
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = signingKey,
+
+                // Validate the JWT Issuer (iss) claim
+                ValidateIssuer = true,
+                ValidIssuer = "ExampleIssuer",
+
+                // Validate the JWT Audience (aud) claim
+                ValidateAudience = true,
+                ValidAudience = "ExampleAudience",
+
+                // Validate the token expiry
+                ValidateLifetime = true,
+
+                // If you want to allow a certain amount of clock drift, set that here:
+                ClockSkew = TimeSpan.Zero
+            };
+
+            app.UseJwtBearerAuthentication(new JwtBearerOptions
+            {
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                TokenValidationParameters = tokenValidationParameters
+            });
 
             DbInitializer.Initialize(context);
         }

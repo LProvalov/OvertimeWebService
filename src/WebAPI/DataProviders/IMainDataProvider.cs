@@ -14,6 +14,8 @@ namespace WebAPI.DataProviders
 
         DataProviderResponse<string> SingIn(string username, string email, string unCryptedPassword);
 
+        DataProviderResponse<bool> ValidateUser(string username, string email, string unCryptedPassword);
+
         // Work with friends list
         DataProviderResponse<ICollection<UserOfService>> GetFriendsList(long userId);
 
