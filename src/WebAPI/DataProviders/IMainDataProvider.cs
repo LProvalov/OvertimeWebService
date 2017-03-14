@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using WebAPI.Auth;
 using WebAPI.Repositories.Entities;
 
 namespace WebAPI.DataProviders
 {
-    public interface IMainDataProvider
+    public interface IMainDataProvider : IIdentityResolver
     {
         // Work with user        
         DataProviderResponse<string> CreateNew(string username, string email, string unCryptedPassword);

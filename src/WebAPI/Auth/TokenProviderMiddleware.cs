@@ -15,13 +15,17 @@ namespace WebAPI.Auth
     {
         private readonly RequestDelegate _next;
         private readonly TokenProviderOptions _options;
-        private readonly IMainDataProvider _dataProvider;
+        private readonly JsonSerializerSettings _serializerSettings;
 
-        public TokenProviderMiddleware(RequestDelegate next, IOptions<TokenProviderOptions> options, IMainDataProvider mainDataProvider)
+        public TokenProviderMiddleware(RequestDelegate next, IOptions<TokenProviderOptions> options)
         {
             this._next = next;
             this._options = options.Value;
-            this._dataProvider = mainDataProvider;
+
+            _serializerSettings = new JsonSerializerSettings
+            {
+                Formatting = Formatting.Indented
+            };
         }
 
         public Task Invoke(HttpContext httpContext)
@@ -41,11 +45,11 @@ namespace WebAPI.Auth
 
         private async Task GenerateToken(HttpContext context)
         {
-            var username = context.Request.Form["username"];
-            var email = context.Request.Form["email"];
-            var password = context.Request.Form["password"];
+            string username = context.Request.Form["username"];
+            string email = context.Request.Form["email"];
+            string password = context.Request.Form["password"];
 
-            Task<ClaimsIdentity> identity = GetIdentity(username, email, password);
+            Task<ClaimsIdentity> identity = _options.IdentityResolver(username, email, password); //GetIdentity(username, email, password);
             if(identity == null)
             {
                 context.Response.StatusCode = 400;
@@ -56,9 +60,9 @@ namespace WebAPI.Auth
             DateTime now = DateTime.UtcNow;
             Claim[] claims = new Claim[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, username),
-                new Claim(JwtRegisteredClaimNames.Email, email),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Sub, string.IsNullOrEmpty(username) ? "undefined" : username),
+                new Claim(JwtRegisteredClaimNames.Email, string.IsNullOrEmpty(email) ? "undefined" : email),
+                new Claim(JwtRegisteredClaimNames.Jti, await _options.NonceGenerator()),
                 new Claim(JwtRegisteredClaimNames.Iat, now.ToUniversalTime().ToString(), ClaimValueTypes.Integer64)
             };
 
@@ -78,19 +82,7 @@ namespace WebAPI.Auth
             };
 
             context.Response.ContentType = "application/json";
-            await context.Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
-        }
-
-        private Task<ClaimsIdentity> GetIdentity(string username, string email, string uncryptedPassword)
-        {
-            var dpResponse = _dataProvider.ValidateUser(username, email, uncryptedPassword);
-            if(dpResponse.Data == true)
-            {
-                ClaimsIdentity ci = new ClaimsIdentity(new System.Security.Principal.GenericIdentity(username, "Token"), new Claim[] { });
-                return Task.FromResult(ci);
-            }
-            // TODO: check cache
-            return Task.FromResult<ClaimsIdentity>(null);
+            await context.Response.WriteAsync(JsonConvert.SerializeObject(response, _serializerSettings));
         }
     }
 }

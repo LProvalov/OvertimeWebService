@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebAPI.DataProviders
 {
-    public enum ResponseStatusEnum
+    public enum ResponseStatus
     {
         OK,
         ERROR_OCCURED

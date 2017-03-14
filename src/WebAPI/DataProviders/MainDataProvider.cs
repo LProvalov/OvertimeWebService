@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using WebAPI.Repositories;
 using WebAPI.Repositories.Entities;
@@ -41,6 +43,17 @@ namespace WebAPI.DataProviders
             throw new NotImplementedException();
         }
 
+        public Task<ClaimsIdentity> ResolveIdentity(string username, string email, string unCryptedPassword)
+        {
+            if (this.ValidateUser(username, email, unCryptedPassword).Data)
+            {
+                return Task.FromResult(new ClaimsIdentity(new GenericIdentity(username, "Token"), new Claim[] { }));
+            }
+
+            // Credentials are invalid, or account doesn't exist
+            return Task.FromResult<ClaimsIdentity>(null);
+        }
+
         public DataProviderResponse<bool> SendRequestOfFriendsAdding(long userId, ICollection<long> addingUsersIds)
         {
             throw new NotImplementedException();
@@ -53,7 +66,7 @@ namespace WebAPI.DataProviders
 
         public DataProviderResponse<bool> ValidateUser(string username, string email, string unCryptedPassword)
         {
-            return new DataProviderResponse<bool>(new string[] { }, true, ResponseStatusEnum.OK, string.Empty);
+            return new DataProviderResponse<bool>(new string[] { }, true, ResponseStatus.OK, string.Empty);
         }
     }
 }

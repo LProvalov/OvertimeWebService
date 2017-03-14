@@ -23,7 +23,8 @@
       "type": "build"
     },
     "Microsoft.AspNetCore.Cryptography.KeyDerivation": "1.0.0",
-    "Microsoft.IdentityModel.Tokens": "5.0.0"
+    "Microsoft.IdentityModel.Tokens": "5.1.2",
+    "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0"
   },
 
   "tools": {

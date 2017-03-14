@@ -8,7 +8,7 @@ namespace WebAPI.DataProviders
     public class DataProviderResponse<T>
     {
         public DataProviderResponse(ICollection<string> errorInFields,
-            T responseData, ResponseStatusEnum status, string errorMessage)
+            T responseData, ResponseStatus status, string errorMessage)
         {
             this._responseData = responseData;
             this._errorInFields = errorInFields;
@@ -16,8 +16,8 @@ namespace WebAPI.DataProviders
             this._errorMessage = errorMessage;
         }
 
-        private ResponseStatusEnum _status;
-        public ResponseStatusEnum Status
+        private ResponseStatus _status;
+        public ResponseStatus Status
         {
             get
             {
