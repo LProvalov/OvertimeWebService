@@ -7,14 +7,16 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.IdentityModel.Tokens;
 using WebAPI.Auth;
 using WebAPI.DataProviders;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Diagnostics;
 
 namespace WebAPI
 {
     public partial class Startup
     {
         private static readonly string secretKey = "mySuper_secretKey_234";
-        private static readonly string validIssuer = "ExampleIssuer";
-        private static readonly string validAudience = "ExampleAudience";
+        private static readonly string validIssuer = "www.SharedList.com";
+        private static readonly string validAudience = "users";
         
         private void ConfigureAuth(IApplicationBuilder app, IMainDataProvider mainDataProvider)
         {
@@ -24,8 +26,8 @@ namespace WebAPI
             app.UseSimpleTokenProvider(new TokenProviderOptions
             {
                 Path = "/api/token",
-                Audience = validIssuer,
-                Issuer = validAudience,
+                Audience = validAudience,
+                Issuer = validIssuer,
                 SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
                 IdentityResolver = mainDataProvider.ResolveIdentity
             });
@@ -55,7 +57,13 @@ namespace WebAPI
             {
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
-                TokenValidationParameters = tokenValidationParameters
+                TokenValidationParameters = tokenValidationParameters,
+                Events = new JwtBearerEvents {
+                    OnAuthenticationFailed = context => {
+                        Debug.WriteLine("MSG:{0}", context.Exception.Message);
+                        return Task.FromResult(0);
+                    }
+                }
             });
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
@@ -70,6 +78,6 @@ namespace WebAPI
             });
 
         }
-        
+
     }
 }

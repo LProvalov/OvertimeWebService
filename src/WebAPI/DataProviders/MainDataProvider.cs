@@ -66,6 +66,17 @@ namespace WebAPI.DataProviders
 
         public DataProviderResponse<bool> ValidateUser(string username, string email, string unCryptedPassword)
         {
+            if (string.IsNullOrEmpty(username) && string.IsNullOrEmpty(email))
+            {
+                ICollection<string> fieldsError = new string[] { "username", "email" };
+                string errorMessage = "Username and Email fields haven't been filed.";
+                return new DataProviderResponse<bool>(fieldsError, false, ResponseStatus.ERROR_OCCURED, errorMessage);
+            }
+            if (string.IsNullOrEmpty(unCryptedPassword))
+            {
+                return new DataProviderResponse<bool>(new string[] { "password" }, false, ResponseStatus.ERROR_OCCURED, "Password field can't be empty.");
+            }
+            
             return new DataProviderResponse<bool>(new string[] { }, true, ResponseStatus.OK, string.Empty);
         }
     }

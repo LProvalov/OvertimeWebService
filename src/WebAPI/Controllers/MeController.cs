@@ -22,6 +22,7 @@ namespace WebAPI.Controllers
 
         public IMainDataProvider DataProvider { get; set; }
 
+        [HttpGet]
         public string Get()
         {
             var username = HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;

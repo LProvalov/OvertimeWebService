@@ -50,7 +50,7 @@ namespace WebAPI.Auth
             string password = context.Request.Form["password"];
 
             Task<ClaimsIdentity> identity = _options.IdentityResolver(username, email, password); //GetIdentity(username, email, password);
-            if(identity == null)
+            if(identity.Result == null)
             {
                 context.Response.StatusCode = 400;
                 await context.Response.WriteAsync("Invalid username or email or password");
